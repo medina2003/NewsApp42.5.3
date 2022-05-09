@@ -1,6 +1,7 @@
 package kg.geektech.newsapp42;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import kg.geektech.newsapp42.databinding.ActivityMainBinding;
@@ -20,7 +23,7 @@ import kg.geektech.newsapp42.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private   NavController navController;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        navController.navigate(R.id.boardFragment);
+        Prefs prefs = new Prefs(this);
+        if (!prefs.isShown())
+            navController.navigate(R.id.boardFragment);
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
@@ -63,17 +68,31 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-
         });
 
     }
 
 
-
-
     @Override
     public boolean onSupportNavigateUp() {
-
         return navController.navigateUp();
+
+
+    }
+
+    private void files() {
+        File dir = new File(getCacheDir(), "Media");
+        dir.mkdir();
+
+
+        File file = new File(dir, "note.txt");
+        file.length();
+
+        if (file.exists()) {
+            file.delete();
+        } else {
+          //  file.createNewFile();
+
+        }
     }
 }

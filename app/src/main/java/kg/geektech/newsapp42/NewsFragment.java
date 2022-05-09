@@ -40,12 +40,19 @@ public class NewsFragment extends Fragment {
             private void save() {
                 String text = binding.ediText.getText().toString();
                 Bundle bundle = new Bundle();
-                Article article=new Article(text,System.currentTimeMillis());
+               Article article = new Article();
+
+
+
+
+
+
                 bundle.putSerializable("article",article);
                 getParentFragmentManager().setFragmentResult("rk_news",bundle);
                 close();
             }
             private void close() {
+
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
                 navController.navigateUp();
             }

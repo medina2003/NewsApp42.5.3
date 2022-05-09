@@ -1,5 +1,7 @@
 package kg.geektech.newsapp42.ui.home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,10 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import kg.geektech.newsapp42.App;
 import kg.geektech.newsapp42.OnItemClickListener;
 import kg.geektech.newsapp42.R;
 import kg.geektech.newsapp42.databinding.FragmentHomeBinding;
@@ -23,16 +29,27 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private NewsAdapter adapter;
+    private ArrayList<Article> list;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LoaData();
         adapter = new NewsAdapter();
+        List<Article> list = App.getDatabase().articleDao().getAll();
+        adapter.addItems(list);
+
+
+
+
 
     }
 
+    private void LoaData() {
 
 
+    }
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -76,7 +93,14 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onItemLongClick(int position) {
-
+                new AlertDialog.Builder(view.getContext()).setTitle("Удаление").setMessage("Вы точно хотите удалить?")
+                        .setNegativeButton("Нет",null )
+                       .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialogInterface, int i) {
+                               App.getDatabase().articleDao().
+                           }
+                       });
             }
         });
     }

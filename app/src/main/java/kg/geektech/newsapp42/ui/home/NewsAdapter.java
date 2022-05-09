@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kg.geektech.newsapp42.OnItemClickListener;
 import kg.geektech.newsapp42.R;
@@ -50,6 +51,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
 
     public Article getItem(int position) {
         return list.get(position);
+    }
+
+    public void addItems(List<Article> list) {
+        this.list.addAll(list);
+        notifyDataSetChanged();
     }
 
 
